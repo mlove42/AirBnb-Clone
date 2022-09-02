@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+![](AirBnb-clone%20project.png)
 
 ## API Documentation
 
@@ -55,7 +55,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - URL: users/:userId
+  - URL: /api/users/:userId
   - Body: none
 
 - Successful Response
@@ -84,7 +84,7 @@ information.
 - Request
 
   - Method: POST
-  - URL: /users/login
+  - URL: /api/users/login
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -294,7 +294,7 @@ Returns all the spots owned (created) by the current user.
 - Request
 
   - Method: GET
-  - URL: api/spots/:userId
+  - URL: api/spots/currentUser
   - Body: none
 
 - Successful Response
