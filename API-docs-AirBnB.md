@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![](AirBnb-clone%20project.png)
+![](/project-db-design-final.png)
 
 ## API Documentation
 
