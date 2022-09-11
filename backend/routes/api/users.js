@@ -1,10 +1,14 @@
 // backend/routes/api/users.js
 const express = require("express");
+const router = express.Router();
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
+
 const { User } = require("../../db/models");
+
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
+
 const validateSignup = [
   check("email")
     .exists({ checkFalsy: true })
@@ -21,11 +25,17 @@ const validateSignup = [
     .withMessage("Password must be 6 characters or more."),
   handleValidationErrors,
 ];
-const router = express.Router();
+
 // Sign up
-router.post("/", validateSignup, async (req, res) => {
-  const { email, password, username } = req.body;
-  const user = await User.signup({ email, username, password });
+router.post("/", async (req, res) => {
+  const { firstName, lastName, username, email, password } = req.body;
+  const user = await User.signup({
+    firstName,
+    lastName,
+    username,
+    email,
+    password,
+  });
 
   await setTokenCookie(res, user);
 

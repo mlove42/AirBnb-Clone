@@ -17,6 +17,7 @@ app.use(express.json());
 
 const routes = require("./routes");
 const { ValidationError } = require("sequelize");
+
 // Security Middleware
 if (!isProduction) {
   // enable cors only in development
