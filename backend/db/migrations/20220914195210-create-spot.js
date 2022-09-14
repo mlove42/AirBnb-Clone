@@ -10,9 +10,12 @@ module.exports = {
       },
       ownerId: {
         type: Sequelize.INTEGER,
-        references: { model: "User" },
-        onDelete: "CASCADE",
         allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+        onDelete: "cascade",
       },
       address: {
         type: Sequelize.STRING,
@@ -47,11 +50,12 @@ module.exports = {
         allowNull: false,
       },
       price: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       previewImg: {
         type: Sequelize.STRING,
+        defaultValue: null,
       },
       createdAt: {
         allowNull: false,
