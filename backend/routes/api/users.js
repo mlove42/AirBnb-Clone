@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
   });
 
   await setTokenCookie(res, user);
-
+  user.dataValues["token"] = setTokenCookie(res, user);
   return res.json({
     user,
   });

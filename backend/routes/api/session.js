@@ -20,21 +20,23 @@ const router = express.Router();
 router.post("/", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
 
-  const user = await User.login({ credential, password });
-
+  // const user = await User.scope("loginUser").login({ credential, password });
+  const user = await User.scope("loginUser").login({ credential, password });
+  // const user = await User.findAll();
   if (!user) {
     const err = new Error("Login failed");
     err.status = 401;
-    err.title = "Login failed";
+    err.title = "Validation error";
     err.errors = ["The provided credentials were invalid."];
     return next(err);
   }
 
-  await setTokenCookie(res, user);
+  //add a token name key to the user.dataValues object, then set the token value as the value to the key value pair
+  user.dataValues["token"] = setTokenCookie(res, user);
+  // user.dataValues["token2"] = req.cookies.token;
+  //we have to remove the createdAT and updatedAt values
 
-  return res.json({
-    user,
-  });
+  res.json(user);
 });
 
 // Log out
