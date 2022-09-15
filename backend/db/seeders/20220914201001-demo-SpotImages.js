@@ -23,6 +23,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterfact.bulkDelete("SpotImages", null, {});
+    await queryInterface.bulkDelete("SpotImages", null, {});
   },
 };
