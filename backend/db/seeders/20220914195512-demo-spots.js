@@ -14,7 +14,7 @@ module.exports = {
         name: "The Dream",
         description: "Your dream place 1",
         price: 124,
-        previewImg:
+        previewImage:
           "https://cdn2.lamag.com/wp-content/uploads/sites/6/2018/06/GettyImages-500797911.jpg",
       },
       {
@@ -28,7 +28,7 @@ module.exports = {
         name: "Home",
         description: "Your dream place 2",
         price: 674,
-        previewImg:
+        previewImage:
           "https://luxury-houses.net/wp-content/uploads/2020/08/Exquisite-Los-Angeles-Modern-House-215-N-Saltair-Ave-1.jpg",
       },
       {
@@ -42,7 +42,7 @@ module.exports = {
         name: "Party",
         description: "Your dream place 3",
         price: 100,
-        previewImg:
+        previewImage:
           "https://media.architecturaldigest.com/photos/5ce2effc711f0003f83fc38d/master/w_1600,c_limit/012%20Ottolenghi.jpg",
       },
       {
@@ -56,7 +56,7 @@ module.exports = {
         name: "KB",
         description: "Your dream place 4",
         price: 824,
-        previewImg:
+        previewImage:
           "https://managecasa.com/wp-content/uploads/2021/02/shutterstock_1731900589-e1612637876218-995x460.jpg",
       },
     ]);
