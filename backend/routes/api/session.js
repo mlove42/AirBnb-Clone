@@ -21,7 +21,10 @@ router.post("/", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
 
   // const user = await User.scope("loginUser").login({ credential, password });
-  const user = await User.scope("loginUser").login({ credential, password });
+  const user = await User.scope(["defaultScope", "loginUser"]).login({
+    credential,
+    password,
+  });
   // const user = await User.findAll();
   if (!user) {
     const err = new Error("Login failed");
