@@ -45,12 +45,15 @@ const validateSpotAttributes = [
     .withMessage("Longitude is required"),
   check("name")
     .exists({ checkFalsy: true })
-    .isLength({ max: 50 })
-    .withMessage("Name must be less than 50 characters"),
+    .withMessage("Name must be less than 50 characters")
+    .isLength({ max: 50 }),
+
   check("description")
     .exists({ checkFalsy: true })
     .withMessage("Description is required"),
-  check("price").exists({ checkFalsy: true }).withMessage("Price is required"),
+  check("price")
+    .exists({ checkFalsy: true })
+    .withMessage("Price per day is required"),
   handleValidationErrors,
 ];
 /////////////////////////
@@ -73,8 +76,9 @@ router.get("/", async (req, res, next) => {
   const spots = await Spot.findAll({
     include: {
       model: Review,
+      attributes: [],
     },
-
+    group: ["Spot.id"],
     attributes: [
       "id",
       "ownerId",
@@ -89,11 +93,11 @@ router.get("/", async (req, res, next) => {
       "price",
       "createdAt",
       "updatedAt",
-      "previewImage",
       [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+      "previewImage",
     ],
   });
-  res.json(spots);
+  res.json({ Spots: spots });
 });
 
 // CREATE A SPOT
@@ -114,8 +118,11 @@ router.post("/", [requireAuth, validateSpotAttributes], async (req, res) => {
     description,
     price,
   });
-
-  res.status(201).json(spot);
+  const newSpot = spot.toJSON();
+  Object.keys(newSpot).forEach(
+    (value) => newSpot[value] == null && delete newSpot[value]
+  );
+  res.status(201).json(newSpot);
 });
 
 // EDIT A SPOT
