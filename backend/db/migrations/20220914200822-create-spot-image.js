@@ -11,10 +11,19 @@ module.exports = {
       spotId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "Spots",
+          key: "id",
+        },
+        onDelete: "cascade",
       },
       url: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      preview: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

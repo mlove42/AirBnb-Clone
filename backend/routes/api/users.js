@@ -9,15 +9,32 @@ const { User } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
+const validateSignup2 = [
+  check("email")
+    .exists({ checkFalsy: true })
+    .isEmail()
+    .withMessage("Invalid email"),
+  check("username")
+    .exists({ checkFalsy: true })
+    .withMessage("Username is required"),
+  check("firstName")
+    .exists({ checkFalsy: true })
+    .withMessage("First Name is required"),
+  check("lastName")
+    .exists({ checkFalsy: true })
+    .withMessage("lastName is required"),
+  handleValidationErrors,
+];
+
 const validateSignup = [
   check("email")
     .exists({ checkFalsy: true })
     .isEmail()
-    .withMessage("Please provide a valid email."),
+    .withMessage("Invalid email"),
   check("username")
     .exists({ checkFalsy: true })
     .isLength({ min: 4 })
-    .withMessage("Please provide a username with at least 4 characters."),
+    .withMessage("Username is required."),
   check("username").not().isEmail().withMessage("Username cannot be an email."),
   check("password")
     .exists({ checkFalsy: true })
@@ -27,8 +44,27 @@ const validateSignup = [
 ];
 
 // Sign up
-router.post("/", async (req, res) => {
+router.post("/", [validateSignup2], async (req, res, next) => {
   const { firstName, lastName, username, email, password } = req.body;
+  const signUpUser = await User.findOne({ where: { email: email } });
+  if (signUpUser) {
+    const err = new Error("User already exists");
+    err.status = 403;
+    err.errors = {
+      email: "User with that email already exists",
+    };
+    next(err);
+  }
+
+  const signUpUserName = await User.findOne({ where: { username: username } });
+  if (signUpUserName) {
+    const err = new Error("User already exists");
+    err.status = 403;
+    err.errors = {
+      username: "User with that username already exists",
+    };
+    next(err);
+  }
   const user = await User.signup({
     firstName,
     lastName,
@@ -37,10 +73,8 @@ router.post("/", async (req, res) => {
     password,
   });
 
-  await setTokenCookie(res, user);
+  user.dataValues["token"] = setTokenCookie(res, user);
 
-  return res.json({
-    user,
-  });
+  return res.json(user);
 });
 module.exports = router;

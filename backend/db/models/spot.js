@@ -60,6 +60,9 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          len: [2, 50],
+        },
       },
       description: {
         type: DataTypes.STRING,
@@ -77,6 +80,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: null,
       },
     },
+
     {
       sequelize,
       modelName: "Spot",
@@ -90,6 +94,13 @@ module.exports = (sequelize, DataTypes) => {
           attributes: { exclude: ["previewImage"] },
         },
       },
+      // hooks: {
+      //   afterCreate: () => {
+      //     attributes: {
+      //       exclude: ["previewImage"];
+      //     }
+      //   },
+      // },
     }
   );
   return Spot;
