@@ -281,4 +281,73 @@ router.delete(
   }
 );
 
+//* Get all Reviews by a Spot's id
+
+router.get("/:spotId/reviews", [spotValidation], async (req, res, next) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+
+  const Reviews = await Review.findAll({
+    where: {
+      spotId: req.params.spotId,
+    },
+    include: [
+      {
+        model: User,
+        attributes: ["id", "firstName", "lastName"],
+      },
+      {
+        model: ReviewImage,
+        attributes: ["id", "url"],
+      },
+    ],
+  });
+  res.json({ Reviews });
+});
+
+//* Create a Review for a Spot based on the Spot's id
+
+const checkExistingReview = async (req, res, next) => {
+  const review = await Review.findOne({
+    where: { userId: req.user.id, spotId: req.params.spotId },
+  });
+  if (review) {
+    const error = new Error("User already has a review for this spot");
+    error.status = 403;
+    return next(error);
+  } else {
+    return next();
+  }
+};
+
+const ReviewValidation = [
+  check("review").notEmpty().withMessage("Review text is required"),
+  check("stars")
+    .notEmpty()
+    .isInt({ min: 1, max: 5 })
+    .withMessage("Stars must be an integer from 1 to 5"),
+  handleValidationErrors,
+];
+
+router.post(
+  "/:spotId/reviews",
+  [
+    restoreUser,
+    requireAuth,
+    spotValidation,
+    checkExistingReview,
+    ReviewValidation,
+  ],
+  async (req, res, next) => {
+    const { review, stars } = req.body;
+    const user = req.user;
+    const newReview = await Review.create({
+      userId: user.id,
+      spotId: req.params.spotId,
+      review,
+      stars,
+    });
+    res.status(201).json(newReview);
+  }
+);
+
 module.exports = router;
