@@ -29,7 +29,7 @@ const spotValidation = async (req, res, next) => {
   }
 };
 ///////////////////////////////////
-// valdiate the spot attributes middleware
+//! valdiate the spot attributes middleware
 const validateSpotAttributes = [
   check("address")
     .exists({ checkFalsy: true })
@@ -57,7 +57,7 @@ const validateSpotAttributes = [
   handleValidationErrors,
 ];
 /////////////////////////
-// SPOT AUTHORIZATION MIDDLEWARE
+//! spot authorization middleware
 const AuthorizationSpot = async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
   const user = req.user;
@@ -71,7 +71,7 @@ const AuthorizationSpot = async (req, res, next) => {
 };
 //////////////////////////////////////////////
 
-// Get all Spots
+//* Get all Spots
 router.get("/", async (req, res, next) => {
   const spots = await Spot.findAll({
     include: {
@@ -100,7 +100,39 @@ router.get("/", async (req, res, next) => {
   res.json({ Spots: spots });
 });
 
-// CREATE A SPOT
+/////////////////////////////////////////////
+//* Get all Spots owned by the Current User
+router.get("/current", [restoreUser, requireAuth], async (req, res) => {
+  const { user } = req;
+  const spots = await Spot.findAll({
+    where: { ownerId: user.id },
+    include: {
+      model: Review,
+      attributes: [],
+    },
+    group: ["Spot.id"],
+    attributes: [
+      "id",
+      "ownerId",
+      "address",
+      "city",
+      "state",
+      "country",
+      "lat",
+      "lng",
+      "name",
+      "description",
+      "price",
+      "createdAt",
+      "updatedAt",
+      [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+      "previewImage",
+    ],
+  });
+  res.json({ Spots: spots });
+});
+
+//* Create a spot
 
 router.post("/", [requireAuth, validateSpotAttributes], async (req, res) => {
   const userId = req.user.id;
@@ -125,12 +157,15 @@ router.post("/", [requireAuth, validateSpotAttributes], async (req, res) => {
   res.status(201).json(newSpot);
 });
 
-// EDIT A SPOT
+//* Edit a Spot
 router.put(
   "/:spotId",
   [requireAuth, validateSpotAttributes, spotValidation],
   async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId);
+    //   {
+    //   attributes: { exclude: ["createdAt", "updatedAt"] },
+    // });
     const {
       address,
       city,
@@ -153,11 +188,12 @@ router.put(
       description: description,
       price: price,
     });
+
     res.json(spot);
   }
 );
 
-// Add an Image to a Spot based on the Spot's id
+//* Add an Image to a Spot based on the Spot's id
 
 router.post(
   "/:spotId/images",
@@ -175,7 +211,7 @@ router.post(
   }
 );
 
-// Get details of a Spot from an id
+//* Get details of a Spot from an id
 router.get("/:spotId", [spotValidation], async (req, res, next) => {
   const id = Number(req.params.spotId);
   const spot = await Spot.findOne({
@@ -225,14 +261,14 @@ router.get("/:spotId", [spotValidation], async (req, res, next) => {
   });
 
   // res.json(stat);
-  console.log(stat);
+  // console.log(stat);
   spot.dataValues.numReviews = stat.dataValues.numReviews;
   spot.dataValues.avgStarRating = stat.dataValues.avgStarRating;
   // console.log(spot);
   res.json(spot);
 });
 
-// DELETE SPOT
+//* Delete a spot
 router.delete(
   "/:spotId",
   [restoreUser, requireAuth, spotValidation, AuthorizationSpot],

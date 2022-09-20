@@ -89,11 +89,7 @@ module.exports = (sequelize, DataTypes) => {
           exclude: ["createdAt", "updatedAt"],
         },
       },
-      scopes: {
-        previewExclude: {
-          attributes: { exclude: ["previewImage"] },
-        },
-      },
+
       // hooks: {
       //   afterCreate: () => {
       //     attributes: {
