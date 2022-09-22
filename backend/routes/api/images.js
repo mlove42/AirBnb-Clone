@@ -75,68 +75,66 @@ router.delete(
   }
 );
 
-//////!
-
-// delete a spot image
-const checkSpotImageExists = async (req, res, next) => {
-  const spotimage = await SpotImage.findByPk(req.params.spotImageId);
-  if (spotimage) {
-    return next();
-  } else {
-    const err = new Error("Image couldn't be found");
-    err.status = 404;
-    return next(err);
-  }
-};
+// // delete a spot image
+// const checkSpotImageExists = async (req, res, next) => {
+//   const spotimage = await SpotImage.findByPk(req.params.spotImageId);
+//   if (spotimage) {
+//     return next();
+//   } else {
+//     const err = new Error("Image couldn't be found");
+//     err.status = 404;
+//     return next(err);
+//   }
+// };
 
 // delete a spot image authorization
-const DeletingSpotImageAuthorization = async (req, res, next) => {
-  const image = await SpotImage.findByPk(req.params.imageId);
-  const user = req.user;
+// const DeletingSpotImageAuthorization = async (req, res, next) => {
+//   const image = await SpotImage.findByPk(req.params.imageId);
+//   const user = req.user;
 
-  let userId;
+//   let userId;
 
-  const spot = await Spot.findByPk(req.params.spotImageId);
+//   const spot = await Spot.findByPk(req.params.spotImageId);
 
-  userId = spot.userId;
+//   userId = spot.userId;
 
-  if (user.id === userId) {
-    return next();
-  } else {
-    const err = new Error("Forbidden");
-    err.status = 403;
-    return next(err);
-  }
-};
+//   if (user.id === userId) {
+//     return next();
+//   } else {
+//     const err = new Error("Forbidden");
+//     err.status = 403;
+//     return next(err);
+//   }
+// };
 
 // Delete a spot Image
-router.delete(
-  "/:spotImageId",
-  [
-    restoreUser,
-    checkSpotImageExists,
-    requireAuth,
-    DeletingSpotImageAuthorization,
-  ],
-  async (req, res, next) => {
-    const deleteImage = await SpotImage.findByPk(req.params.spotImageId);
+// router.delete(
+//   "/:spotImageId",
+//   [
+//     restoreUser,
+//     checkSpotImageExists,
+//     requireAuth,
+//     DeletingSpotImageAuthorization,
+//   ],
+//   async (req, res, next) => {
+//     const deleteImage = await SpotImage.findByPk(req.params.spotImageId);
 
-    if (!deleteImage) {
-      const err = new Error("Review Image couldn't be found");
-      err.status = 403;
-      next(err);
-    }
+//     if (!deleteImage) {
+//       const err = new Error("Review Image couldn't be found");
+//       err.status = 403;
+//       next(err);
+//     }
 
-    await SpotImage.destroy({
-      where: {
-        id: req.params.spotImageId,
-      },
-    });
-    res.json({
-      message: "Successfully deleted",
-      statusCode: 200,
-    });
-  }
-);
+//     await SpotImage.destroy({
+//       where: {
+//         id: req.params.spotImageId,
+//       },
+//     });
+//     res.json({
+//       message: "Successfully deleted",
+//       statusCode: 200,
+//     });
+//   }
+// );
 
 module.exports = router;

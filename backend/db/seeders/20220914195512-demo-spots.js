@@ -32,7 +32,7 @@ module.exports = {
           "https://luxury-houses.net/wp-content/uploads/2020/08/Exquisite-Los-Angeles-Modern-House-215-N-Saltair-Ave-1.jpg",
       },
       {
-        ownerId: 2,
+        ownerId: 3,
         address: "455 App Road",
         city: "Camp",
         state: "Summer",
@@ -46,7 +46,7 @@ module.exports = {
           "https://media.architecturaldigest.com/photos/5ce2effc711f0003f83fc38d/master/w_1600,c_limit/012%20Ottolenghi.jpg",
       },
       {
-        ownerId: 1,
+        ownerId: 4,
         address: "824 Lakers Drive",
         city: "Kobe",
         state: "Cali",
