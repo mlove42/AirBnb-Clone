@@ -14,6 +14,11 @@ module.exports = {
         preview: false,
       },
       {
+        spotId: 2,
+        url: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+        preview: false,
+      },
+      {
         spotId: 3,
         url: "https://photographylife.com/wp-content/uploads/2017/01/Best-of-2016-Nasim-Mansurov-20.jpg",
         preview: true,

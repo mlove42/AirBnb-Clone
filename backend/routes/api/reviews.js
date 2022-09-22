@@ -16,17 +16,17 @@ const {
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
-// Authentication validation
-const authenticationValidation = function (req, res, next) {
-  const user = req.user;
-  if (!user) {
-    const error = new Error("Authentication required");
-    error.statusCode = 401;
-    error.status = 401;
-    return next(error);
-  }
-  return next();
-};
+// // Authentication validation
+// const authenticationValidation = function (req, res, next) {
+//   const user = req.user;
+//   if (!user) {
+//     const error = new Error("Authentication required");
+//     error.statusCode = 401;
+//     error.status = 401;
+//     return next(error);
+//   }
+//   return next();
+// };
 
 const ReviewValidation = [
   check("review").notEmpty().withMessage("Review text is required"),
@@ -48,52 +48,48 @@ const reviewExistValidation = async function (req, res, next) {
   }
 };
 
-// Authorization required for Reviews
-const authorizationRequiredReviews = async function (req, res, next) {
-  const review = await Review.findByPk(req.params.reviewId);
-  if (review.userId === req.user.id) {
-    return next();
-  } else {
-    const err = new Error("Forbidden");
-    err.status = 403;
-    return next(err);
-  }
-};
+// // Authorization required for Reviews
+// const authorizationRequiredReviews = async function (req, res, next) {
+//   const review = await Review.findByPk(req.params.reviewId);
+//   if (review.userId === req.user.id) {
+//     return next();
+//   } else {
+//     const err = new Error("Forbidden");
+//     err.status = 403;
+//     return next(err);
+//   }
+// };
 
 //* Get all Reviews of the Current User
-router.get(
-  "/current",
-  [restoreUser, authenticationValidation],
-  async (req, res, next) => {
-    const currentUserReviews = await Review.findAll({
-      where: {
-        userId: req.user.id,
+router.get("/current", [restoreUser], async (req, res, next) => {
+  const currentUserReviews = await Review.findAll({
+    where: {
+      userId: req.user.id,
+    },
+    include: [
+      {
+        model: User,
+        attributes: ["id", "firstName", "lastName"],
       },
-      include: [
-        {
-          model: User,
-          attributes: ["id", "firstName", "lastName"],
+      {
+        model: Spot,
+        attributes: {
+          exclude: ["description", "createdAt", "updatedAt", "previewImage"],
         },
-        {
-          model: Spot,
-          attributes: {
-            exclude: ["description", "createdAt", "updatedAt"],
-          },
-        },
-        {
-          model: ReviewImage,
-          attributes: ["id", "url"],
-        },
-      ],
-    });
-    res.json({ Reviews: currentUserReviews });
-  }
-);
+      },
+      {
+        model: ReviewImage,
+        attributes: ["url"],
+      },
+    ],
+  });
+  res.json({ Reviews: currentUserReviews });
+});
 
 //* Add an Image to a Review based on the Review's id
 router.post(
   "/:reviewId/images",
-  [restoreUser, requireAuth, authenticationValidation],
+  [restoreUser, requireAuth],
   async (req, res, next) => {
     const review = await Review.findByPk(req.params.reviewId);
     if (!review) {
@@ -124,6 +120,7 @@ router.post(
     });
     res.json({
       id: newImage.id,
+      reviewId: newImage.reviewId,
       url: newImage.url,
     });
   }
@@ -133,14 +130,7 @@ router.post(
 
 router.put(
   "/:reviewId",
-  [
-    restoreUser,
-    requireAuth,
-    reviewExistValidation,
-    authenticationValidation,
-    authorizationRequiredReviews,
-    ReviewValidation,
-  ],
+  [restoreUser, requireAuth, reviewExistValidation, ReviewValidation],
   async (req, res, next) => {
     const { review, stars } = req.body;
     const updateReview = await Review.findByPk(req.params.reviewId);
@@ -149,7 +139,7 @@ router.put(
       review: review,
       stars: stars,
     });
-    updateReview.updatedAt = new Date();
+
     res.status(200).json(updateReview);
   }
 );
@@ -157,12 +147,7 @@ router.put(
 //* Delete a Review
 router.delete(
   "/:reviewId",
-  [
-    restoreUser,
-    requireAuth,
-    reviewExistValidation,
-    authorizationRequiredReviews,
-  ],
+  [restoreUser, requireAuth, reviewExistValidation],
   async (req, res, next) => {
     await Review.destroy({
       where: {
