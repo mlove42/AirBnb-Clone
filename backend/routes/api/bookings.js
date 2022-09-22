@@ -5,66 +5,12 @@ const sequelize = require("sequelize");
 
 const { restoreUser, requireAuth } = require("../../utils/auth");
 const {
-  User,
   Booking,
-  Review,
-  ReviewImage,
+
   Spot,
-  SpotImage,
 } = require("../../db/models");
 
-const { check } = require("express-validator");
-const { handleValidationErrors } = require("../../utils/validation");
-
-// Helper function for validation error
-const validationError = (message, code) => {
-  let error = new Error("Validation error");
-  error.status = code;
-  error.errors = {
-    endDate: message,
-    statusCode: code,
-  };
-  return error;
-};
-
-// helper function for a particular element not found
-const notFound = (el, code) => {
-  let error = new Error(`${el} couldn't be found`);
-  error.status = code;
-  error.statusCode = code;
-  return error;
-};
-
-// helper function for a review that already exists, may not need since this only occurs once?
-const bookingExists = (bookingError) => {
-  let error = new Error(
-    "Sorry, this spot is already booked for the specified dates"
-  );
-  error.status = 403;
-  error.statusCode = 403;
-  error.errors = {};
-  if (bookingError.startDate) {
-    error.errors.startDate = bookingError.startDate;
-  }
-  if (bookingError.endDate) {
-    error.errors.endDate = bookingError.endDate;
-  }
-  return error;
-};
-
-const validateBooking = [
-  check("startDate")
-    .exists({ checkFalsy: true })
-    .isString()
-    .withMessage("Start date is required"),
-  check("endDate")
-    .exists({ checkFalsy: true })
-    .isString()
-    .withMessage("End date is required"),
-  handleValidationErrors,
-];
-
-// Get all of the Current User's Bookings
+//* Get all of the Current User's Bookings
 
 router.get("/current", [restoreUser], async (req, res) => {
   const Bookings = await Booking.findAll({
@@ -105,7 +51,7 @@ router.put("/:bookingId", [restoreUser], async (req, res, next) => {
   res.json(updateBooking);
 });
 
-//! Delete a booking
+//* Delete a booking
 const checkBookingExists = async (req, res, next) => {
   const booking = await Booking.findByPk(req.params.bookingId);
   if (booking) {

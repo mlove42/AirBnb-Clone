@@ -93,7 +93,7 @@ router.get("/", async (req, res, next) => {
       "price",
       "createdAt",
       "updatedAt",
-      [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+      // [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
       "previewImage",
     ],
   });
@@ -125,14 +125,14 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
       "price",
       "createdAt",
       "updatedAt",
-      [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+      // [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
       "previewImage",
     ],
   });
   res.json({ Spots: spots });
 });
 
-// GET ALL SPOTS
+//* GET ALL SPOTS
 
 router.get("/", async (req, res, next) => {
   let page = parseInt(req.query.page);
@@ -215,8 +215,16 @@ router.put(
       description: description,
       price: price,
     });
-    const updated = await Spot.findByPk(req.params.spotId);
-    res.json(updated);
+    // const updated = await Spot.findByPk(req.params.spotId);
+    // res.json(updated);
+
+    let newUpdated = spot.toJSON();
+
+    Object.keys(newUpdated).forEach(
+      (value) => newUpdated[value] == null && delete newUpdated[value]
+    );
+    newUpdated = await Spot.findByPk(req.params.spotId);
+    res.status(201).json(newUpdated);
   }
 );
 
@@ -232,7 +240,7 @@ router.post(
       url,
     });
     const SpotImageInfo = await SpotImage.findByPk(spotImage.id, {
-      attributes: ["id", "url", "preview"],
+      attributes: ["id", "spotId", "url"],
     });
     res.json(SpotImageInfo);
   }
@@ -268,7 +276,7 @@ router.get("/:spotId", [spotValidation], async (req, res, next) => {
       {
         model: SpotImage,
         // as: "spotImage",
-        attributes: ["id", "url", "preview"],
+        attributes: ["url"],
         group: "'SpotImage'.'id'",
       },
       {
@@ -289,8 +297,8 @@ router.get("/:spotId", [spotValidation], async (req, res, next) => {
 
   // res.json(stat);
   // console.log(stat);
-  spot.dataValues.numReviews = stat.dataValues.numReviews;
-  spot.dataValues.avgStarRating = stat.dataValues.avgStarRating;
+  // spot.dataValues.numReviews = stat.dataValues.numReviews;
+  // spot.dataValues.avgStarRating = stat.dataValues.avgStarRating;
   // console.log(spot);
   res.json(spot);
 });
@@ -380,7 +388,16 @@ router.post(
 );
 
 //* Create a Booking from a Spot based on the Spot's id
+const authorizationRequiredBookings = async function (req, res, next) {
+  const spot = await Spot.findByPk(req.params.spotId);
 
+  if (req.user.id === spot.ownerId) {
+    const err = new Error("Forbidden");
+    err.status = 403;
+    next(err);
+  }
+  next();
+};
 const checkConflictingBookingExists = async (req, res, next) => {
   const { startDate, endDate } = req.body;
   const user = req.user;
@@ -412,7 +429,12 @@ const checkConflictingBookingExists = async (req, res, next) => {
 
 router.post(
   "/:spotId/bookings",
-  [restoreUser, spotValidation, checkConflictingBookingExists],
+  [
+    restoreUser,
+    spotValidation,
+    authorizationRequiredBookings,
+    checkConflictingBookingExists,
+  ],
   async (req, res, next) => {
     const { startDate, endDate } = req.body;
 
@@ -427,7 +449,7 @@ router.post(
   }
 );
 
-// Get all bookings by spot id
+//* Get all bookings by spot id
 router.get(
   "/:spotId/bookings",
   [restoreUser, requireAuth, spotValidation],
