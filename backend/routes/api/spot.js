@@ -13,7 +13,7 @@ const {
   SpotImage,
 } = require("../../db/models");
 
-const { check } = require("express-validator");
+const { check, query } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
 const spotValidation = async (req, res, next) => {
@@ -130,6 +130,35 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
     ],
   });
   res.json({ Spots: spots });
+});
+
+// GET ALL SPOTS
+
+router.get("/", async (req, res, next) => {
+  let page = parseInt(req.query.page);
+  let size = parseInt(req.query.size);
+  let limit;
+  let offset;
+
+  if (!page && !size) {
+    const all = await Spot.findAll();
+    return res.json(all);
+  }
+
+  if (page >= 1 && size >= 1) {
+    limit = size;
+    offset = size * (page - 1);
+  }
+
+  const spot = await Spot.findAll({
+    limit: size,
+    offset: size * (page - 1),
+  });
+  return res.json({
+    spot,
+    page,
+    size,
+  });
 });
 
 //* Create a spot
@@ -297,7 +326,7 @@ router.get("/:spotId/reviews", [spotValidation], async (req, res, next) => {
       },
       {
         model: ReviewImage,
-        attributes: ["id", "url"],
+        attributes: ["url"],
       },
     ],
   });
@@ -347,6 +376,80 @@ router.post(
       stars,
     });
     res.status(201).json(newReview);
+  }
+);
+
+//* Create a Booking from a Spot based on the Spot's id
+
+const checkConflictingBookingExists = async (req, res, next) => {
+  const { startDate, endDate } = req.body;
+  const user = req.user;
+  const bookings = await Booking.findAll({
+    where: [{ userId: user.id }, { spotId: req.params.spotId }],
+  });
+
+  if (bookings) {
+    bookings.forEach((booking) => {
+      if (booking.startDate === startDate || booking.endDate === endDate) {
+        const err = new Error(
+          "Sorry, this spot is already booked for the specified dates"
+        );
+        err.status = 403;
+        err.errors = {};
+        if (booking.startDate === startDate) {
+          err.errors[startDate] =
+            "Start date conflicts with an existing booking";
+        }
+        if (booking.endDate === endDate) {
+          err.errors[endDate] = "End date conflicts with an existing booking";
+        }
+        return next(err);
+      }
+    });
+  }
+  return next();
+};
+
+router.post(
+  "/:spotId/bookings",
+  [restoreUser, spotValidation, checkConflictingBookingExists],
+  async (req, res, next) => {
+    const { startDate, endDate } = req.body;
+
+    const newBooking = await Booking.create({
+      spotId: req.params.spotId,
+      userId: req.user.id,
+      startDate: startDate,
+      endDate: endDate,
+    });
+    res.statusCode = 200;
+    res.json(newBooking);
+  }
+);
+
+// Get all bookings by spot id
+router.get(
+  "/:spotId/bookings",
+  [restoreUser, requireAuth, spotValidation],
+  async (req, res) => {
+    const user = req.user;
+    const spot = await Spot.findByPk(req.params.spotId);
+    if (spot.ownerId === user.id) {
+      const bookings = await Booking.findAll({
+        where: { spotId: spot.id },
+        include: {
+          model: User,
+          attributes: ["id", "firstName", "lastName"],
+        },
+      });
+      res.json({ Bookings: bookings });
+    } else {
+      const bookings = await Booking.findAll({
+        where: { spotId: spot.id },
+        attributes: ["spotId", "startDate", "endDate"],
+      });
+      res.json({ Bookings: bookings });
+    }
   }
 );
 
