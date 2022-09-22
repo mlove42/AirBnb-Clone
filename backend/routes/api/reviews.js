@@ -6,27 +6,14 @@ const sequelize = require("sequelize");
 const { restoreUser, requireAuth } = require("../../utils/auth");
 const {
   User,
-  Booking,
+
   Review,
   ReviewImage,
   Spot,
-  SpotImage,
 } = require("../../db/models");
 
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
-
-// // Authentication validation
-// const authenticationValidation = function (req, res, next) {
-//   const user = req.user;
-//   if (!user) {
-//     const error = new Error("Authentication required");
-//     error.statusCode = 401;
-//     error.status = 401;
-//     return next(error);
-//   }
-//   return next();
-// };
 
 const ReviewValidation = [
   check("review").notEmpty().withMessage("Review text is required"),
@@ -47,18 +34,6 @@ const reviewExistValidation = async function (req, res, next) {
     return next(err);
   }
 };
-
-// // Authorization required for Reviews
-// const authorizationRequiredReviews = async function (req, res, next) {
-//   const review = await Review.findByPk(req.params.reviewId);
-//   if (review.userId === req.user.id) {
-//     return next();
-//   } else {
-//     const err = new Error("Forbidden");
-//     err.status = 403;
-//     return next(err);
-//   }
-// };
 
 //* Get all Reviews of the Current User
 router.get("/current", [restoreUser], async (req, res, next) => {
