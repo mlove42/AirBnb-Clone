@@ -70,6 +70,31 @@ const AuthorizationSpot = async (req, res, next) => {
   }
 };
 //////////////////////////////////////////////
+//* GET ALL SPOTS
+
+router.get("/", async (req, res, next) => {
+  let page = parseInt(req.query.page);
+  let size = parseInt(req.query.size);
+  let limit;
+  let offset;
+  if (!page && !size) {
+    const all = await Spot.findAll();
+    return res.json(all);
+  }
+  if (page >= 1 && size >= 1) {
+    limit = size;
+    offset = size * (page - 1);
+  }
+  const spot = await Spot.findAll({
+    limit: size,
+    offset: size * (page - 1),
+  });
+  return res.json({
+    spot,
+    page,
+    size,
+  });
+});
 
 //* Get all Spots
 router.get("/", async (req, res, next) => {
@@ -130,35 +155,6 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
     ],
   });
   res.json({ Spots: spots });
-});
-
-//* GET ALL SPOTS
-
-router.get("/", async (req, res, next) => {
-  let page = parseInt(req.query.page);
-  let size = parseInt(req.query.size);
-  let limit;
-  let offset;
-
-  if (!page && !size) {
-    const all = await Spot.findAll();
-    return res.json(all);
-  }
-
-  if (page >= 1 && size >= 1) {
-    limit = size;
-    offset = size * (page - 1);
-  }
-
-  const spot = await Spot.findAll({
-    limit: size,
-    offset: size * (page - 1),
-  });
-  return res.json({
-    spot,
-    page,
-    size,
-  });
 });
 
 //* Create a spot
