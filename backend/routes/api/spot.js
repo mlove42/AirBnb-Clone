@@ -210,16 +210,25 @@ router.put(
       description: description,
       price: price,
     });
-    // const updated = await Spot.findByPk(req.params.spotId);
+    const updated = await Spot.findByPk(req.params.spotId, {
+      attributes: {
+        exclude: ["previewImage"],
+        include: ["createdAt", "updatedAt"],
+      },
+    });
     // res.json(updated);
 
-    newUpdated = await Spot.findByPk(req.params.spotId);
+    // newUpdated = await Spot.findByPk(req.params.spotId);
 
-    newUpdated = spot.toJSON();
-    Object.keys(newUpdated).forEach((value) => {
-      newUpdated[value] == null && delete newUpdated[value];
-    });
-    res.status(201).json(newUpdated);
+    // newUpdated = spot.toJSON();
+    // Object.keys(newUpdated).forEach((value) => {
+    //   console.log(value);
+    //   newUpdated[value] == null && delete newUpdated[value];
+    // });
+
+    // const removeUpdatedAt = await Spot.findByPk(req.params.spotId);
+
+    res.status(201).json(updated);
   }
 );
 
