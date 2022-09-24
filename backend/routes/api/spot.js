@@ -132,7 +132,7 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
   const spots = await Spot.findAll({
     where: { ownerId: user.id },
     include: {
-      model: Review,
+      model: SpotImage,
       attributes: [],
     },
     group: ["Spot.id"],
@@ -150,8 +150,7 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
       "price",
       "createdAt",
       "updatedAt",
-      // [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
-      "previewImage",
+      [sequelize.fn("max", sequelize.col("SpotImages.url")), "previewImage"],
     ],
   });
   res.json({ Spots: spots });
@@ -214,12 +213,12 @@ router.put(
     // const updated = await Spot.findByPk(req.params.spotId);
     // res.json(updated);
 
-    let newUpdated = spot.toJSON();
-
-    Object.keys(newUpdated).forEach(
-      (value) => newUpdated[value] == null && delete newUpdated[value]
-    );
     newUpdated = await Spot.findByPk(req.params.spotId);
+
+    newUpdated = spot.toJSON();
+    Object.keys(newUpdated).forEach((value) => {
+      newUpdated[value] == null && delete newUpdated[value];
+    });
     res.status(201).json(newUpdated);
   }
 );
