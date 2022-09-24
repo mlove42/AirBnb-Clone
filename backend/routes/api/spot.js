@@ -301,8 +301,8 @@ router.get("/:spotId", [spotValidation], async (req, res, next) => {
 
   // res.json(stat);
   // console.log(stat);
-  // spot.dataValues.numReviews = stat.dataValues.numReviews;
-  // spot.dataValues.avgStarRating = stat.dataValues.avgStarRating;
+  spot.dataValues.numReviews = stat.dataValues.numReviews;
+  spot.dataValues.avgStarRating = stat.dataValues.avgStarRating;
   // console.log(spot);
   res.json(spot);
 });
