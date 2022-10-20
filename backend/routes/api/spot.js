@@ -469,13 +469,14 @@ router.get(
         },
       });
       res.json({ Bookings: bookings });
-    } else {
-      const bookings = await Booking.findAll({
-        where: { spotId: spot.id },
-        attributes: ["spotId", "startDate", "endDate"],
-      });
-      res.json({ Bookings: bookings });
     }
+    // else {
+    //   const bookings = await Booking.findAll({
+    //     where: { spotId: spot.id },
+    //     attributes: ["spotId", "startDate", "endDate"],
+    //   });
+    //   res.json({ Bookings: bookings });
+    // }
   }
 );
 
