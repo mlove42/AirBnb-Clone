@@ -30,12 +30,12 @@ router.post("/", validateLogin, async (req, res, next) => {
     // return next(err);
     const err = new Error("Invalid credentials");
     err.status = 401;
-    next(err);
+    return next(err);
   }
 
-  user.dataValues["token"] = setTokenCookie(res, user);
+  setTokenCookie(res, user);
 
-  return res.json(user);
+  res.json(user);
 });
 
 // Log out
