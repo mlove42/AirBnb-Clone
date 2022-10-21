@@ -44,7 +44,7 @@ const validateSignup = [
 ];
 
 // Sign up
-router.post("/", [validateSignup2], async (req, res, next) => {
+router.post("/", [validateSignup], async (req, res, next) => {
   const { firstName, lastName, username, email, password } = req.body;
   const signUpUser = await User.findOne({ where: { email: email } });
   if (signUpUser) {
@@ -75,6 +75,6 @@ router.post("/", [validateSignup2], async (req, res, next) => {
 
   user.dataValues["token"] = setTokenCookie(res, user);
 
-  return res.json(user);
+  res.json(user);
 });
 module.exports = router;
