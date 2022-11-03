@@ -150,7 +150,8 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
       "price",
       "createdAt",
       "updatedAt",
-      [sequelize.fn("max", sequelize.col("SpotImages.url")), "previewImage"],
+      "previewImage",
+      // [sequelize.fn("max", sequelize.col("SpotImages.url")), "previewImage"],
     ],
   });
   res.json({ Spots: spots });
@@ -160,8 +161,18 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
 
 router.post("/", [requireAuth, validateSpotAttributes], async (req, res) => {
   const userId = req.user.id;
-  const { address, city, state, country, lat, lng, name, description, price } =
-    req.body;
+  const {
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price,
+    previewImage,
+  } = req.body;
   const spot = await Spot.create({
     ownerId: userId,
     address,
@@ -173,6 +184,7 @@ router.post("/", [requireAuth, validateSpotAttributes], async (req, res) => {
     name,
     description,
     price,
+    previewImage,
   });
   const newSpot = spot.toJSON();
   Object.keys(newSpot).forEach(
@@ -198,6 +210,7 @@ router.put(
       name,
       description,
       price,
+      previewImage,
     } = req.body;
     await spot.update({
       address: address,
@@ -209,10 +222,11 @@ router.put(
       name: name,
       description: description,
       price: price,
+      previewImage: previewImage,
     });
     const updated = await Spot.findByPk(req.params.spotId, {
       attributes: {
-        exclude: ["previewImage"],
+        // exclude: ["previewImage"],
         include: ["createdAt", "updatedAt"],
       },
     });
@@ -244,7 +258,7 @@ router.post(
       url,
     });
     const SpotImageInfo = await SpotImage.findByPk(spotImage.id, {
-      attributes: ["id", "spotId", "url"],
+      attributes: ["id", "spotId", "url", "previewImage"],
     });
     res.json(SpotImageInfo);
   }
@@ -268,6 +282,7 @@ router.get("/:spotId", [spotValidation], async (req, res, next) => {
       "name",
       "description",
       "price",
+      "previewImage",
       "createdAt",
       "updatedAt",
     ],
