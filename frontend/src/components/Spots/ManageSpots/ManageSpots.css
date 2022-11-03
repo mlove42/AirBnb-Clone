@@ -1,0 +1,90 @@
+.manage-listing {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.spot-details-2 {
+  width: 20%;
+  margin-left: 190px;
+}
+
+.manage-listing-container {
+  width: 200vh;
+}
+
+.user-spots-item {
+  align-items: center;
+  border-bottom: 1px solid #c8c8c8;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+
+  margin-left: 150px;
+}
+
+.user-spots-item-img-container {
+  height: 30vh;
+  width: 25vw;
+}
+
+.user-spots-item-img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.user-spots-details {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+  margin-left: 50px;
+}
+
+.user-spot-edit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-right: 300px;
+}
+
+.user-spot-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.user-spot-address-container {
+  margin-right: -60px;
+}
+
+.user-spot-address {
+  font-size: 16px;
+}
+
+.edit-button {
+  background-color: #ff1563;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 15px;
+  height: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.delete-button {
+  background-color: black;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 15px;
+  height: 40px;
+}
+
+.no-listing-container {
+  align-items: center;
+  display: flex;
+  /* flex-direction: column; */
+  font-size: 40px;
+}

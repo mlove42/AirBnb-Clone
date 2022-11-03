@@ -1,0 +1,31 @@
+.spots-preview-container {
+  margin-left: 35px;
+  margin-right: 45px;
+  height: 100vh;
+}
+.spots-preview {
+  grid-gap: 1.5vw;
+  display: grid;
+  font-size: 14px;
+  gap: 1.5vw;
+  grid-template-columns: repeat(4, 2fr);
+  justify-content: space-between;
+  margin-top: 35px;
+}
+
+.spot-preview {
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 5px;
+  text-decoration: none;
+}
+
+.spot-img {
+  border-radius: 20px;
+  height: 35vh;
+  object-fit: cover;
+  transition-duration: 0.2s;
+  width: 21vw;
+}

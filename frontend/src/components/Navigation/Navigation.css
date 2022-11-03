@@ -1,0 +1,172 @@
+Header Section CSS .main {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 37px;
+  top: 0;
+  background-color: white;
+  border-bottom: 0.5px solid #c8c8c8;
+  box-shadow: 0 0.5px 3px 0.2px #dcdcdc;
+  padding: 20px;
+  z-index: 1;
+}
+
+.header-left {
+  display: flex;
+  margin-left: 75px;
+}
+
+.header-right {
+  display: flex;
+  top: 0;
+  margin-right: 75px;
+}
+
+.header-right > * {
+  display: flex;
+  position: fixed;
+
+  /* right: 8vw; */
+  right: 150px;
+  top: 25px;
+  background-color: white;
+  list-style: none;
+  /* flex-direction: column; */
+  flex-direction: row;
+}
+
+/* .host-button {
+  display: flex;
+  position: fixed;
+  margin-right: 40px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+} */
+
+/* .host-button:hover {
+  border-radius: 10px;
+  background-color: rgb(233, 233, 233);
+}
+
+.host-button > * {
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  font-size: small;
+  text-decoration: none;
+} */
+
+.profile-button {
+  display: flex;
+  position: fixed;
+  height: 20px;
+}
+
+.profile-button-test {
+  padding: 3px;
+  width: 30px;
+  border: none;
+}
+
+.profile-button > * {
+  background-color: white;
+  margin-top: 2px;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 15px;
+}
+
+.session-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 23px;
+  right: 8vw;
+}
+
+.sign-up-container {
+  border: none;
+  background-color: white;
+}
+
+.sign-up {
+  text-decoration: none;
+  color: black;
+  border: none;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.sign-up:hover {
+  background-color: lightgray;
+}
+
+.airbnb-icon {
+  display: flex;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.icon-text {
+  font-weight: bold;
+  font-size: x-large;
+  text-decoration: none;
+  color: #ff5a5f;
+}
+
+.fa-airbnb {
+  padding-right: 5px;
+  color: #ff5a5f;
+}
+
+.homepage-links {
+  display: block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+.homepage-link {
+  /* gap: 5px; */
+  text-decoration: none;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 14px;
+  color: rgb(85, 26, 139);
+  /* column-gap: 5px; */
+  cursor: pointer;
+  display: flex;
+  /* row-gap: 5px; */
+  text-decoration-color: rgba(0, 0, 238);
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  text-decoration-thickness: auto;
+}
+
+.homepage-link-name {
+  font-size: 22px;
+  font-weight: 500;
+  color: #ff385c;
+}

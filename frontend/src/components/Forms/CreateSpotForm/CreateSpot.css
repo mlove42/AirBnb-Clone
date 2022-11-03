@@ -1,0 +1,50 @@
+.create-spot-container {
+  display: flex;
+  height: 100vh;
+}
+
+.create-form-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 400px;
+  width: 80%;
+}
+
+.back-to-home-button {
+  background-color: #dcdcdc;
+  border: none;
+  border-radius: 100px;
+  color: #000;
+  font-size: 11px;
+  height: 27px;
+  position: absolute;
+  right: 2%;
+  top: 2%;
+  width: 90px;
+}
+
+.back-to-home-button:hover {
+  background-color: #ebebeb;
+}
+
+.create-spot-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.create-spot-form-input {
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.create-spot-form-button {
+  background-color: #ff1563;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 15px;
+  height: 40px;
+}

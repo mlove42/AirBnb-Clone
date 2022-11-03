@@ -1,0 +1,17 @@
+.common-profile-option-btn {
+  margin-top: -2.5px;
+  margin-right: 10px;
+  height: 37px;
+  background-color: #fff;
+  border: none;
+  border-radius: 70px;
+  color: #000;
+  padding-left: 8px;
+  padding-right: 8px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.common-profile-option-btn:hover {
+  background-color: #dcdcdc;
+}

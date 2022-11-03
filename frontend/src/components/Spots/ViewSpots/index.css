@@ -1,0 +1,125 @@
+.spot-detail-main,
+.spot-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.spot-detail-main {
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 40px;
+}
+
+.spot-section {
+  width: 1000px;
+}
+
+.spot-detail-main,
+.spot-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.spot-name {
+  display: flex;
+  justify-self: start;
+  color: black;
+}
+
+.spot-section > * {
+  margin: 0;
+  padding: 0;
+}
+
+.spot-description {
+  margin-bottom: 20px;
+}
+.spot-section > * {
+  margin: 0;
+  padding: 0;
+}
+.spot-description {
+  max-height: 100px;
+  padding: 10px 10px 10px 0px;
+}
+
+.spot-header-image > * {
+  border-radius: 10px;
+  height: 500px;
+  object-fit: cover;
+  width: 1000px;
+}
+.review-section {
+  width: 1000px;
+}
+.user-review {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+.user-review-form {
+  height: 90px;
+}
+
+.stars-label {
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.general-input {
+  margin-right: 10px;
+}
+
+.edit-spot-main,
+.login-button {
+  display: flex;
+  justify-content: center;
+}
+.login-button {
+  align-items: center;
+  margin-top: 20px;
+}
+.login-button {
+  height: 25px;
+  padding: 0;
+  width: 100px;
+}
+.login-button > * {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.header-login-button {
+  background-color: #ff1563;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  padding: 5px 10px;
+  color: #fff;
+}
+.delete-user-review {
+  display: flex;
+  margin: 10px 10px 10px 30px;
+}
+.other-reviews-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.delete-icon {
+  color: #eb0014;
+  margin-top: 4.5px;
+  margin-right: 10px;
+}
+.other-review-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.review-review {
+  margin: 5px;
+}
