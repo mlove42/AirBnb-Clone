@@ -39,7 +39,7 @@ const Spots = () => {
                   alt={spots[spotId].name}
                 />
               ) : (
-                <div>{spots[spotId]?.name}</div>
+                <div className="spot-img-box">{spots[spotId]?.name}</div>
               )}
 
               <div className="spot-details-container">
