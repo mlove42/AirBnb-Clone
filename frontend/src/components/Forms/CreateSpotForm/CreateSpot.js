@@ -49,7 +49,7 @@ const CreateSpot = () => {
           Back to Home
         </button>
         <div>
-          <h1>Please fill out listing form</h1>
+          <h1>Please fill out listing form.</h1>
           <form className="create-spot-form" onSubmit={handleSubmit}>
             <input
               className="create-spot-form-input"
