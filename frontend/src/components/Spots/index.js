@@ -19,7 +19,7 @@ const Spots = () => {
   return (
     <div className="spots-preview-container">
       <ul className="spots-preview">
-        {Object.keys(spots).map((spotId) => {
+        {Object.keys(spots)?.map((spotId) => {
           return (
             <NavLink
               // once the user click on the photo get the spot by the spot ID
@@ -32,7 +32,7 @@ const Spots = () => {
                 dispatch(getSelectedSpotReviews(spotId));
               }}
             >
-              {spots[spotId].previewImage ? (
+              {spots[spotId]?.previewImage ? (
                 <img
                   className="spot-img"
                   src={spots[spotId].previewImage}
@@ -45,16 +45,16 @@ const Spots = () => {
               <div className="spot-details-container">
                 <div className="spot-details" style={{ marginTop: "-15px" }}>
                   <strong>
-                    <p className="spot-location">{`${spots[spotId].city}, ${spots[spotId].state}`}</p>
+                    <p className="spot-location">{`${spots[spotId]?.city}, ${spots[spotId]?.state}`}</p>
                   </strong>
-                  {spots[spotId].name && (
+                  {spots[spotId]?.name && (
                     <p className="spot-name" style={{ marginTop: "-10px" }}>
                       {spots[spotId]?.name}
                     </p>
                   )}
                 </div>
                 <div className="spot-price" style={{ marginTop: "-10px" }}>
-                  <strong>{`$${spots[spotId].price}`}</strong>
+                  <strong>{`$${spots[spotId]?.price}`}</strong>
                 </div>
               </div>
             </NavLink>
