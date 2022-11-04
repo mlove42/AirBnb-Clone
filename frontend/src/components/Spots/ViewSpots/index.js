@@ -72,7 +72,7 @@ const ViewSpots = () => {
   useEffect(() => {
     dispatch(getSelectedSpotReviews(spotId));
     // dispatch(getSelectedSpot(spotId));
-  }, [dispatch, actionToggled]);
+  }, [dispatch, actionToggled, review, editState]);
 
   // console.log(spot.SpotImages);
 
