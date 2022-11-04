@@ -74,21 +74,22 @@ const ViewSpots = () => {
     dispatch(getSelectedSpot(spotId));
   }, [dispatch, actionToggled]);
   // console.log(spot.SpotImages);
+
   return (
     <>
       <div className="spot-detail-main">
         <div className="spot-section">
           <div className="spot-name">
-            <h1>{spot.name}</h1>
+            <h1>{spot?.name}</h1>
           </div>
           <div className="spot-description">
             <div>
-              <strong>Location: </strong> {spot.city}, {spot.state}
+              <strong>Location: </strong> {spot?.city}, {spot?.state}
             </div>
           </div>
           <div className="spot-rating">
             <i className="fa-solid fa-star"></i>
-            {spot.avgStarRating || "Be the first to Review"}
+            {spot?.avgStarRating || "Be the first to Review"}
           </div>
           <div className="spot-header-image">
             <img src={spot.previewImage} alt={spot.name} />
@@ -103,7 +104,6 @@ const ViewSpots = () => {
             {/* {console.log("sesssionUser", sessionUser)} */}
 
             {/* if sessionUser exist allow for the user to give a review */}
-
             {sessionUser?.username ? (
               <form className="user-review-form" onSubmit={handleSubmit}>
                 <input
@@ -197,10 +197,11 @@ const ViewSpots = () => {
               ) : (
                 <div className="other-review-container">
                   <div className="reviewer-name">
-                    Name:{" " + review.User.firstName} {review.User.lastName}
+                    Name:{" " + review?.User?.firstName}{" "}
+                    {review?.User?.lastName}
                   </div>
                   <div className="review-stars">
-                    Ratings: {" " + review.stars}
+                    Ratings: {" " + review?.stars}
                   </div>
                   <div className="review-review">
                     Comment: {" " + review?.review}
