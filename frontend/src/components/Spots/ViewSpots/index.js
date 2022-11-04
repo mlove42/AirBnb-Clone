@@ -49,7 +49,7 @@ const ViewSpots = () => {
     {
       // thunks always take in the same arguments as when we create the thunk
       dispatch(addNewReview(spotId, reviewData));
-
+      dispatch(getSelectedSpotReviews(spotId));
       setActionToggled((actionToggled) => !actionToggled);
     }
   };
@@ -71,7 +71,6 @@ const ViewSpots = () => {
 
   useEffect(() => {
     console.log("insider use effect");
-
     dispatch(getSelectedSpotReviews(spotId));
     dispatch(getSelectedSpot(spotId));
   }, [dispatch, actionToggled]);
