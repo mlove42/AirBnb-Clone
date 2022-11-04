@@ -70,7 +70,9 @@ const ViewSpots = () => {
   };
 
   useEffect(() => {
+    console.log("insider use effect");
     dispatch(getSelectedSpotReviews(spotId));
+    dispatch(getSelectedSpot(spotId));
   }, [dispatch, actionToggled]);
 
   // console.log(spot.SpotImages);
