@@ -149,7 +149,8 @@ const ViewSpots = () => {
           {/* if the review exist */}
           {/* {console.log("reviews", reviews)} */}
           {reviews?.map((review) => (
-            <div className="other-reviews-container">
+            <div key={review.id} className="other-reviews-container">
+              {/* {console.log(review)} */}
               {review?.User?.id === userId && (
                 <>
                   <Link
@@ -165,12 +166,13 @@ const ViewSpots = () => {
                     to={`/spots/${spotId}`}
                     onClick={() => {
                       dispatch(deleteMyReview(review.id));
+                      dispatch(getSelectedSpotReviews(spotId));
                       setActionToggled((actionToggled) => !actionToggled);
+                      console.log("delete review");
                     }}
                   />
                 </>
               )}
-
               {editState === true ? (
                 <form className="user-review-form" onSubmit={handleReviewEdit}>
                   <input
