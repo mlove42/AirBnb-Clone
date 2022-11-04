@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "16.18.0"
+  },
   "dependencies": {
     "buffer-writer": "^2.0.0",
     "pg-connection-string": "^2.5.0",
