@@ -49,7 +49,7 @@ const ViewSpots = () => {
     {
       // thunks always take in the same arguments as when we create the thunk
       dispatch(addNewReview(spotId, reviewData));
-
+      dispatch(getSelectedSpotReviews(spotId));
       setActionToggled((actionToggled) => !actionToggled);
     }
   };
@@ -70,8 +70,9 @@ const ViewSpots = () => {
   };
 
   useEffect(() => {
+    console.log("insider use effect");
     dispatch(getSelectedSpotReviews(spotId));
-    // dispatch(getSelectedSpot(spotId));
+    dispatch(getSelectedSpot(spotId));
   }, [dispatch, actionToggled]);
 
   // console.log(spot.SpotImages);
@@ -148,7 +149,8 @@ const ViewSpots = () => {
           {/* if the review exist */}
           {/* {console.log("reviews", reviews)} */}
           {reviews?.map((review) => (
-            <div className="other-reviews-container">
+            <div key={review.id} className="other-reviews-container">
+              {/* {console.log(review)} */}
               {review?.User?.id === userId && (
                 <>
                   <Link
@@ -164,12 +166,13 @@ const ViewSpots = () => {
                     to={`/spots/${spotId}`}
                     onClick={() => {
                       dispatch(deleteMyReview(review.id));
+                      dispatch(getSelectedSpotReviews(spotId));
                       setActionToggled((actionToggled) => !actionToggled);
+                      console.log("delete review");
                     }}
                   />
                 </>
               )}
-
               {editState === true ? (
                 <form className="user-review-form" onSubmit={handleReviewEdit}>
                   <input
