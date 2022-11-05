@@ -90,10 +90,10 @@ const ViewSpots = () => {
               <strong>Location: </strong> {spot?.city}, {spot?.state}
             </div>
           </div>
-          <div className="spot-rating">
+          {/* <div className="spot-rating">
             <i className="fa-solid fa-star"></i>
             {spot?.avgStarRating || "Be the first to Review"}
-          </div>
+          </div> */}
           <div className="spot-header-image">
             <img src={spot.previewImage} alt={spot.name} />
           </div>
