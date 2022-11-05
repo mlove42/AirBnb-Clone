@@ -71,6 +71,7 @@ const EditListingFormPage = ({
             <input
               type="text"
               name="address"
+              required
               className="edit-spot-form-input"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -83,6 +84,7 @@ const EditListingFormPage = ({
             <input
               type="text"
               name="city"
+              required
               className="edit-spot-form-input"
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -95,6 +97,7 @@ const EditListingFormPage = ({
             <input
               type="text"
               name="state"
+              required
               className="edit-spot-form-input"
               value={state}
               onChange={(e) => setState(e.target.value)}
@@ -107,6 +110,7 @@ const EditListingFormPage = ({
             <input
               type="text"
               name="country"
+              required
               className="edit-spot-form-input"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
@@ -119,6 +123,7 @@ const EditListingFormPage = ({
             <input
               type="number"
               name="lat"
+              required
               className="edit-spot-form-input"
               value={lat}
               onChange={(e) => setLat(e.target.value)}
@@ -131,6 +136,7 @@ const EditListingFormPage = ({
             <input
               type="number"
               name="lng"
+              required
               className="edit-spot-form-input"
               value={lng}
               onChange={(e) => setLng(e.target.value)}
@@ -143,6 +149,7 @@ const EditListingFormPage = ({
             <input
               type="text"
               name="name"
+              required
               className="edit-spot-form-input"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -158,6 +165,7 @@ const EditListingFormPage = ({
             <input
               type="text"
               name="description"
+              required
               className="edit-spot-form-input"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -170,6 +178,7 @@ const EditListingFormPage = ({
             <input
               type="number"
               name="price"
+              required
               className="edit-spot-form-input"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
@@ -185,6 +194,7 @@ const EditListingFormPage = ({
             <input
               type="input"
               name="previewImage"
+              required
               className="edit-spot-form-input"
               value={previewImage}
               onChange={(e) => setImage(e.target.value)}

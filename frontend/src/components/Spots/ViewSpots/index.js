@@ -45,7 +45,8 @@ const ViewSpots = () => {
       review,
       stars,
     };
-
+    setReview("");
+    setStars("");
     {
       // thunks always take in the same arguments as when we create the thunk
       dispatch(addNewReview(spotId, reviewData));
