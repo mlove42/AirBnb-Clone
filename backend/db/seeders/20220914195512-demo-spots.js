@@ -7,7 +7,7 @@ module.exports = {
         ownerId: 1,
         address: "312 N Spring St",
         city: "Los Angeles",
-        state: "Cali",
+        state: "CA",
         country: "USA",
         lat: 34.055038,
         lng: -118.242447,
