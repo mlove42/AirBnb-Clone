@@ -20,6 +20,7 @@ const CreateSpot = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [previewImage, setPreviewImage] = useState("");
+  const [errors, setErrors] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,12 +50,13 @@ const CreateSpot = () => {
           Back to Home
         </button>
         <div>
-          <h1>Please fill out listing form.</h1>
+          <h1>Please fill out your listing information</h1>
           <form className="create-spot-form" onSubmit={handleSubmit}>
             <input
               className="create-spot-form-input"
               type="text"
               placeholder="Address"
+              required
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
@@ -62,6 +64,7 @@ const CreateSpot = () => {
               className="create-spot-form-input"
               type="text"
               placeholder="City"
+              required
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
@@ -69,6 +72,7 @@ const CreateSpot = () => {
               className="create-spot-form-input"
               type="text"
               placeholder="State"
+              required
               value={state}
               onChange={(e) => setState(e.target.value)}
             />
@@ -76,6 +80,7 @@ const CreateSpot = () => {
               className="create-spot-form-input"
               type="text"
               placeholder="Country"
+              required
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             />
@@ -83,6 +88,7 @@ const CreateSpot = () => {
               className="create-spot-form-input"
               type="number"
               placeholder="Latitude"
+              required
               value={lat}
               onChange={(e) => setLat(e.target.value)}
             />
@@ -90,6 +96,7 @@ const CreateSpot = () => {
               className="create-spot-form-input"
               type="number"
               placeholder="Longitude"
+              required
               value={lng}
               onChange={(e) => setLng(e.target.value)}
             />
@@ -97,6 +104,7 @@ const CreateSpot = () => {
               className="create-spot-form-input"
               type="text"
               placeholder="Location Name"
+              required
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -104,6 +112,7 @@ const CreateSpot = () => {
               className="create-spot-form-input"
               type="text"
               placeholder="Description"
+              required
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -111,6 +120,7 @@ const CreateSpot = () => {
               className="create-spot-form-input"
               type="number"
               placeholder="Price"
+              required
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
@@ -118,6 +128,7 @@ const CreateSpot = () => {
               className="create-spot-form-input"
               type="input"
               placeholder="Spot Image"
+              required
               value={previewImage}
               onChange={(e) => setPreviewImage(e.target.value)}
             />
