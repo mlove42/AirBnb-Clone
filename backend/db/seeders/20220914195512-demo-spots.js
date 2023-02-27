@@ -1,68 +1,180 @@
 "use strict";
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert("Spots", [
-      {
-        ownerId: 1,
-        address: "312 N Spring St",
-        city: "Los Angeles",
-        state: "CA",
-        country: "USA",
-        lat: 34.055038,
-        lng: -118.242447,
-        name: "The Dream",
-        description: "Your dream place 1",
-        price: 124,
-        previewImage:
-          "https://cdn2.lamag.com/wp-content/uploads/sites/6/2018/06/GettyImages-500797911.jpg",
-      },
-      {
-        ownerId: 2,
-        address: "123 Air Drive",
-        city: "Sandusky",
-        state: "Ohio",
-        country: "USA",
-        lat: 23.254933,
-        lng: -218.222543,
-        name: "Home",
-        description: "Your dream place 2",
-        price: 674,
-        previewImage:
-          "https://luxury-houses.net/wp-content/uploads/2020/08/Exquisite-Los-Angeles-Modern-House-215-N-Saltair-Ave-1.jpg",
-      },
-      {
-        ownerId: 3,
-        address: "455 App Road",
-        city: "Camp",
-        state: "Summer",
-        country: "USA",
-        lat: 56.254933,
-        lng: -314.208443,
-        name: "Party",
-        description: "Your dream place 3",
-        price: 100,
-        previewImage:
-          "https://media.architecturaldigest.com/photos/5ce2effc711f0003f83fc38d/master/w_1600,c_limit/012%20Ottolenghi.jpg",
-      },
-      {
-        ownerId: 4,
-        address: "824 Lakers Drive",
-        city: "Kobe",
-        state: "Cali",
-        country: "USA",
-        lat: 98.254933,
-        lng: -824.208443,
-        name: "KB",
-        description: "Your dream place 4",
-        price: 824,
-        previewImage:
-          "https://managecasa.com/wp-content/uploads/2021/02/shutterstock_1731900589-e1612637876218-995x460.jpg",
-      },
-    ]);
-  },
+    async up(queryInterface, Sequelize) {
+        await queryInterface.bulkInsert("Spots", [
+            {
+                ownerId: 1,
+                address: "312 N Spring St",
+                city: "Los Angeles",
+                state: "California",
+                country: "USA",
+                lat: 34.055038,
+                lng: -118.242447,
+                name: "The Dream",
+                description: "Your dream place 1",
+                price: 124,
+                previewImage:
+                    "https://cdn2.lamag.com/wp-content/uploads/sites/6/2018/06/GettyImages-500797911.jpg",
+            },
+            {
+                ownerId: 2,
+                address: "123 Air Drive",
+                city: "Sandusky",
+                state: "Ohio",
+                country: "USA",
+                lat: 23.254933,
+                lng: -218.222543,
+                name: "Home",
+                description: "Your dream place 2",
+                price: 674,
+                previewImage:
+                    "https://luxury-houses.net/wp-content/uploads/2020/08/Exquisite-Los-Angeles-Modern-House-215-N-Saltair-Ave-1.jpg",
+            },
+            {
+                ownerId: 3,
+                address: "455 App Road",
+                city: "Seattle",
+                state: "Washington",
+                country: "USA",
+                lat: 56.254933,
+                lng: -314.208443,
+                name: "Party",
+                description: "Your dream place 3",
+                price: 100,
+                previewImage:
+                    "https://media.architecturaldigest.com/photos/5ce2effc711f0003f83fc38d/master/w_1600,c_limit/012%20Ottolenghi.jpg",
+            },
+            {
+                ownerId: 4,
+                address: "824 Lakers Drive",
+                city: "Cleveland",
+                state: "Ohio",
+                country: "USA",
+                lat: 98.254933,
+                lng: -824.208443,
+                name: "KB",
+                description: "Your dream place 4",
+                price: 824,
+                previewImage:
+                    "https://managecasa.com/wp-content/uploads/2021/02/shutterstock_1731900589-e1612637876218-995x460.jpg",
+            },
+            {
+                ownerId: 1,
+                address: "123 Harry Way",
+                city: "New York",
+                state: "New York",
+                country: "USA",
+                lat: 98.254933,
+                lng: -824.208443,
+                name: "Yorker",
+                description: "Wonderland",
+                price: 824,
+                previewImage:
+                    "https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg",
+            },
+            {
+                ownerId: 2,
+                address: "824 Lakers Drive",
+                city: "Atlanta ",
+                state: "Georgia",
+                country: "USA",
+                lat: 98.254933,
+                lng: -824.208443,
+                name: "Wider",
+                description: "Green place",
+                price: 234,
+                previewImage:
+                    "https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg",
+            },
+            {
+                ownerId: 3,
+                address: "100 President Way",
+                city: "Kanas City",
+                state: "Missori",
+                country: "USA",
+                lat: 98.254933,
+                lng: -824.208443,
+                name: "White House",
+                description: "Political Stay",
+                price: 567,
+                previewImage:
+                    "https://images.pexels.com/photos/53610/large-home-residential-house-architecture-53610.jpeg",
+            },
+            {
+                ownerId: 4,
+                address: "34 Dave County Ave",
+                city: "Miami",
+                state: "Flordia",
+                country: "USA",
+                lat: 98.254933,
+                lng: -824.208443,
+                name: "The American Dream",
+                description: "The Beginning",
+                price: 198,
+                previewImage:
+                    "https://images.pexels.com/photos/164558/pexels-photo-164558.jpeg",
+            },
+            {
+                ownerId: 5,
+                address: "45 Jackson Ave",
+                city: "Detroit",
+                state: "Michigan",
+                country: "USA",
+                lat: 98.254933,
+                lng: -824.208443,
+                name: "Door of Dreams",
+                description: "The Color Door Of Your Dream",
+                price: 276,
+                previewImage:
+                    "https://images.pexels.com/photos/2416654/pexels-photo-2416654.jpeg",
+            },
+            {
+                ownerId: 6,
+                address: "00 Nowhere Drive",
+                city: "New Jersey",
+                state: "New York",
+                country: "USA",
+                lat: 98.254933,
+                lng: -824.208443,
+                name: "Maze",
+                description: "The home of mazes",
+                price: 1824,
+                previewImage:
+                    "https://images.pexels.com/photos/210474/pexels-photo-210474.jpeg",
+            },
+            {
+                ownerId: 1,
+                address: "348 Red Way Road",
+                city: "San Diego",
+                state: "California",
+                country: "USA",
+                lat: 98.254933,
+                lng: -824.208443,
+                name: "Red House",
+                description: "The Red House",
+                price: 1595,
+                previewImage:
+                    "https://images.pexels.com/photos/208747/pexels-photo-208747.jpeg",
+            },
+            {
+                ownerId: 2,
+                address: "45 Freeway Ave",
+                city: "Memphis",
+                state: "Tennessee",
+                country: "USA",
+                lat: 98.254933,
+                lng: -824.208443,
+                name: "Clock Tower",
+                description: "Your dream place 10",
+                price: 234,
+                previewImage:
+                    "https://images.pexels.com/photos/158148/ruhl-house-home-galveston-texas-158148.jpeg",
+            },
+        ]);
+    },
 
-  async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("Spots", null, {});
-  },
+    async down(queryInterface, Sequelize) {
+        await queryInterface.bulkDelete("Spots", null, {});
+    },
 };
