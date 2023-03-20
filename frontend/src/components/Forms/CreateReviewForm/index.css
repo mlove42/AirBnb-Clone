@@ -1,0 +1,17 @@
+.review-listing-form-height {
+    height: 400px !important;
+    width: 600px !important;
+    border-radius: 10px;
+}
+
+.stars-spot-input-field-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 3rem;
+    margin-left: 200px;
+}
+
+.edit-spot-form-input-review {
+    width: 180%;
+}

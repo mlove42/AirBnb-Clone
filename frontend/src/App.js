@@ -7,7 +7,7 @@ import SignupFormPage from "./components/Forms/SignupFormPage";
 import LoginFormPage from "./components/Forms/LoginFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-
+import ReviewComponent from "./components/Forms/CreateReviewForm/Review";
 import Spots from "./components/Spots";
 import CreateSpotForm from "./components/Forms/CreateSpotForm/CreateSpot";
 import ManageSpots from "./components/Spots/ManageSpots/ManageSpots";
@@ -29,6 +29,9 @@ function App() {
                 )}
                 {isLoaded && (
                     <Switch>
+                        {/* <Route exact path="/reviews/:spotId">
+                            <ReviewComponent />
+                        </Route> */}
                         <Route exact path="/spots/:spotId">
                             <ViewSpots />
                         </Route>

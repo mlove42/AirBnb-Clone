@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
-
+import EditReviewModal from "../../Modals/EditReviewModal";
 import { useHistory, Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
+import ReviewModal from "../../Modals/CreateReviewModal";
+import ReviewComponent from "../../Forms/CreateReviewForm/Review";
 import {
     addNewReview,
     getSelectedSpotReviews,
@@ -11,13 +12,17 @@ import {
     editMyReview,
 } from "../../../store/reviewsReducer";
 import { getSelectedSpot } from "../../../store/spotsReducer";
+import EditReview from "../../Forms/EditReviewForm";
+import { Modal } from "../../../context/Modal";
 
 const ViewSpots = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const spot = useSelector((state) => state.spotsState);
     const reviews = useSelector((state) => state.reviews?.Reviews);
+    const test = useSelector((state) => state.reviews);
     const sessionUser = useSelector((state) => state.session.user);
+
     let userId = sessionUser && sessionUser.id;
     // console.log("Spot", spot);
     // const spotImg = localStorage.getItem("selectedSpotUrl");
@@ -31,6 +36,8 @@ const ViewSpots = () => {
     const [editState, setEditState] = useState(false);
     const [reviewId, setReviewId] = useState("");
     const [errors, setErrors] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [BigReviewId, setBigReviewId] = useState("");
 
     // console.log("spot", location.pathname.length);
     //check if the location has data and the the path has data, then return the string which will be the spotId
@@ -49,7 +56,7 @@ const ViewSpots = () => {
     const userReview = spotReviews?.filter(
         (review) => review?.userId === sessionUser?.id
     );
-
+    // console.log(userReview, "USER REVIEW");
     // console.log(userReview, "USER REVIEW");
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -72,10 +79,11 @@ const ViewSpots = () => {
         const editedReviewData = {
             review: editReview,
             stars: editStars,
+            id: BigReviewId,
         };
 
         {
-            dispatch(editMyReview(reviewId, editedReviewData));
+            dispatch(editMyReview(BigReviewId, editedReviewData));
             setEditState((editState) => !editState);
             setActionToggled((actionToggled) => !actionToggled);
         }
@@ -86,8 +94,11 @@ const ViewSpots = () => {
         dispatch(getSelectedSpot(spotId));
     }, [dispatch, actionToggled, errors]);
 
-    // console.log(spot.SpotImages);
-    // console.log(errors, "ERRORS RIGHT HERE");
+    const user = useSelector((state) => state.session.user);
+
+    let ownerId = spot.ownerId;
+    // console.log(spot.ownerId)
+
     return (
         <>
             <div className="spot-detail-main">
@@ -101,74 +112,33 @@ const ViewSpots = () => {
                             {spot?.state}
                         </div>
                     </div>
-                    {/* <div className="spot-rating">
-            <i className="fa-solid fa-star"></i>
-            {spot?.avgStarRating || "Be the first to Review"}
-          </div> */}
+
                     <div className="spot-header-image">
                         <img src={spot.previewImage} alt={spot.name} />
                     </div>
                 </div>
                 <div className="review-section">
                     <div className="review-header">
-                        <h2>Leave a review</h2>
+                        {userId !== ownerId &&
+                        userReview?.length === 0 &&
+                        sessionUser?.username ? (
+                            <ReviewModal />
+                        ) : (
+                            ""
+                        )}
                     </div>
 
                     <div className="user-review">
-                        {/* {console.log("sesssionUser", sessionUser)} */}
-
-                        {/* if sessionUser exist allow for the user to give a review */}
-
                         {sessionUser?.username ? (
                             <>
-                                <form
-                                    className="user-review-form"
-                                    onSubmit={handleSubmit}
-                                >
-                                    <input
-                                        type="text"
-                                        placeholder="Review"
-                                        value={review}
-                                        onChange={(e) =>
-                                            setReview(e.target.value)
-                                        }
-                                        required
-                                    />
-                                    <label
-                                        className="stars-label"
-                                        htmlFor="stars"
-                                    >
-                                        Stars
-                                    </label>
-                                    <input
-                                        className="general-input"
-                                        type="number"
-                                        placeholder="Stars"
-                                        value={stars}
-                                        onChange={(e) =>
-                                            setStars(e.target.value)
-                                        }
-                                        min="1"
-                                        max="5"
-                                        required
-                                    />
-
-                                    <button type="submit">Submit Review</button>
-                                    <div className="errors">
-                                        {Object.values(errors).map(
-                                            (error, i) => {
-                                                return (
-                                                    <div
-                                                        key={i}
-                                                        className="error"
-                                                    >
-                                                        <li>{error}</li>
-                                                    </div>
-                                                );
-                                            }
-                                        )}
-                                    </div>
-                                </form>
+                                {showModal && (
+                                    <Modal onClose={() => setShowModal(false)}>
+                                        <EditReview
+                                            review={review}
+                                            setShowModal={setShowModal}
+                                        />
+                                    </Modal>
+                                )}
                             </>
                         ) : (
                             <div>
@@ -187,96 +157,9 @@ const ViewSpots = () => {
                                 </div>
                             </div>
                         )}
-                        {/* <div>{errors.message}</div> */}
                     </div>
-                    {/* if the review exist */}
-                    {/* {console.log("reviews", reviews)} */}
 
-                    {reviews?.map((review) => (
-                        <div
-                            key={review.id}
-                            className="other-reviews-container"
-                        >
-                            {/* {console.log(review)} */}
-                            {review?.User?.id === userId && (
-                                <>
-                                    <Link
-                                        className="delete-icon fa-solid fa-pen-to-square"
-                                        to={`/spots/${spotId}`}
-                                        onClick={() => {
-                                            setEditState(
-                                                (editState) => !editState
-                                            );
-                                            setReviewId(review.id);
-                                        }}
-                                    />
-                                    <Link
-                                        className="delete-icon fa-solid fa-trash"
-                                        to={`/spots/${spotId}`}
-                                        onClick={() => {
-                                            dispatch(deleteMyReview(review.id));
-                                            dispatch(
-                                                getSelectedSpotReviews(spotId)
-                                            );
-                                            setActionToggled(
-                                                (actionToggled) =>
-                                                    !actionToggled
-                                            );
-                                        }}
-                                    />
-                                </>
-                            )}
-                            {userId == review.userId && editState === true ? (
-                                <form
-                                    className="user-review-form"
-                                    onSubmit={handleReviewEdit}
-                                >
-                                    <input
-                                        className="general-input"
-                                        type="text"
-                                        placeholder="Review"
-                                        value={editReview}
-                                        onChange={(e) =>
-                                            setEditReview(e.target.value)
-                                        }
-                                        required
-                                    />
-                                    <label
-                                        className="stars-label"
-                                        htmlFor="editStars"
-                                    >
-                                        Stars
-                                    </label>
-                                    <input
-                                        className="general-input"
-                                        type="number"
-                                        placeholder="Stars"
-                                        value={editStars}
-                                        onChange={(e) =>
-                                            setEditStars(e.target.value)
-                                        }
-                                        min="1"
-                                        max="5"
-                                        required
-                                    />
-                                    <button type="submit">Save Changes</button>
-                                </form>
-                            ) : (
-                                <div className="other-review-container">
-                                    <div className="reviewer-name">
-                                        Name:{" " + review?.User?.firstName}{" "}
-                                        {review?.User?.lastName}
-                                    </div>
-                                    <div className="review-stars">
-                                        Ratings: {" " + review?.stars}
-                                    </div>
-                                    <div className="review-review">
-                                        Comment: {" " + review?.review}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                    <ReviewComponent />
                 </div>
             </div>
         </>
