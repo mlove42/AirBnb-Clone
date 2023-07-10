@@ -13,7 +13,7 @@ const ManageBookings = () => {
     const state = useSelector((state) => state);
     const userBookings = useSelector((state) => state.bookings.Bookings);
     console.log(userBookings, "mybooking");
-    // console.log(state, "THIS IS STATE");
+    console.log(state, "THIS IS STATE");
     const deleteBookingOnClick = (bookingId) => {
         dispatch(deleteMySpot(bookingId));
         window.location.reload();
