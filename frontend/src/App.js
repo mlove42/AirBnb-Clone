@@ -13,6 +13,7 @@ import CreateSpotForm from "./components/Forms/CreateSpotForm/CreateSpot";
 import ManageSpots from "./components/Spots/ManageSpots/ManageSpots";
 import ViewSpots from "./components/Spots/ViewSpots";
 import Footer from "./components/Footer/Footer";
+import ManageBookings from "./components/Spots/ManageBookings/ManageBooking";
 function App() {
     const dispatch = useDispatch();
     const location = useLocation();
@@ -46,6 +47,9 @@ function App() {
                         </Route>
                         <Route exact path="/manage-listings/spots">
                             <ManageSpots />
+                        </Route>
+                        <Route exact path="/manage-bookings/spots">
+                            <ManageBookings />
                         </Route>
                         <Route exact path="/spots/:spotId">
                             <ViewSpots />
