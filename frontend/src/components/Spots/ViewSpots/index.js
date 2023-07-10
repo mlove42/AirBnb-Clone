@@ -84,7 +84,7 @@ const ViewSpots = () => {
         // console.log("insider use effect");
         //after each render dispatch the below informataion to the store
         dispatch(getSelectedSpotReviews(spotId));
-        // dispatch(getSelectedSpot(spotId));
+        dispatch(getSelectedSpot(spotId));
     }, [dispatch, actionToggled]);
 
     // console.log(spot.SpotImages);
