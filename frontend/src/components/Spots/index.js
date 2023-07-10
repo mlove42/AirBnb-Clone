@@ -10,15 +10,21 @@ import { getSelectedSpotReviews } from "../../store/reviewsReducer";
 
 const Spots = () => {
   const dispatch = useDispatch();
+  // use useSelector to extra data from the spot store
   const spots = useSelector((state) => state.spotsState);
 
+  // spots = spots' data
+
+  // using useEffect to have the page load the spots after each render
   useEffect(() => {
+    //dispatch the loadSpots action creator to the store
     dispatch(loadSpots());
   }, [dispatch]);
 
   return (
     <div className="spots-preview-container">
       <ul className="spots-preview">
+        {/* iteratore over the spots array to pull out each piece of data needed for the componenet */}
         {Object.keys(spots)?.map((spotId) => {
           return (
             <NavLink
@@ -28,10 +34,12 @@ const Spots = () => {
               className="spot-preview"
               key={spotId}
               onClick={() => {
+                // once we click on the navLink we are going to load the "get spot by Id data from the backend api and the get reviews by spot Id backend api "
                 dispatch(getSelectedSpot(spotId));
                 dispatch(getSelectedSpotReviews(spotId));
               }}
             >
+              {/* if there is a previewImage do this */}
               {spots[spotId]?.previewImage ? (
                 <img
                   className="spot-img"
@@ -39,6 +47,7 @@ const Spots = () => {
                   alt={spots[spotId].name}
                 />
               ) : (
+                //  if not do this
                 <div className="spot-img-box">{spots[spotId]?.name}</div>
               )}
 

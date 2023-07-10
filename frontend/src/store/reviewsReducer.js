@@ -49,6 +49,7 @@ export const addNewReview = (spotId, reviewData) => async (dispatch) => {
   }
 };
 
+//  get review data by the spot Id
 export const getSelectedSpotReviews = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
   const spotReviews = await response.json();

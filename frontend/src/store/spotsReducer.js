@@ -106,6 +106,7 @@ export const deleteMySpot = (spotId) => async (dispatch) => {
   }
 };
 
+// get spot data by spot ID
 export const getSelectedSpot = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: "GET",
